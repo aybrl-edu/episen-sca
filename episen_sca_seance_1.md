@@ -258,6 +258,15 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 
 ---
 
+<!-- _class: figure -->
+<!-- _header: 3. Docker -->
+
+## Docker Build & Run
+
+![w:64em](./assets/seance_1/dockerfile_image_conteneur.jpg)
+
+---
+
 <!-- _class: enum -->
 <!-- _header: 3. Docker -->
 
