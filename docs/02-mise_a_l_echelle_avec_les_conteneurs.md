@@ -107,7 +107,7 @@ style: |
 
 ## Mise à l’échelle manuelle de conteneurs
 
-![bg right 85%](./assets/seance_2/je_lance_n_fois_docker_run.png)
+![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/je_lance_n_fois_docker_run.png)
 
 * Tâche répétitive
 * Action manuelle
@@ -121,7 +121,7 @@ style: |
 
 ## Mise à l'échelle automatique de conteneurs
 
-![bg right 85%](./assets/seance_2/et_si_on_utilisait_un_orchestrateur.png)
+![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/et_si_on_utilisait_un_orchestrateur.png)
 
 * [Docker Compose](https://docs.docker.com/compose/) pour **exécuter des applications multi-conteneurs**
 * Approche déclarative basée sur du code donc traçable dans le temps
@@ -135,7 +135,7 @@ style: |
 
 ## Mise à l'échelle automatique de conteneurs
 
-![bg right 85%](./assets/seance_2/si_jetais_vous_jutiliserais_un_ordchestrateur.png)
+![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/si_jetais_vous_jutiliserais_un_ordchestrateur.png)
 
 * Traçabilité des actions
 * Approche déclarative
@@ -169,7 +169,7 @@ style: |
 
 ## Introduction
 
-![bg right 75%](./assets/seance_2/octopus.png)
+![bg right 75%](./images/02-mise_a_l_echelle_avec_les_conteneurs/octopus.png)
 
 * Outil faisant partie de l’écosystème Docker
 * Définition, exécution de conteneurs dans N environnements isolés sur un nœud
@@ -283,5 +283,6 @@ volumes:
 
 * Docker<br>https://docs.docker.com
 * Docker Compose<br>https://docs.docker.com/compose
-* GitHub - docker/compose<br>https://github.com/docker/compose
-* The Twelve-Factor App<br>https://12factor.net
+* Docker Compose file specification<br>https://docs.docker.com/compose/compose-file
+* Dockerfile reference<br>https://docs.docker.com/engine/reference/builder
+* Moby<br>https://mobyproject.org

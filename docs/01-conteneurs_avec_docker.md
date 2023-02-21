@@ -104,7 +104,7 @@ style: |
 
 ## Comparaison de l'architecture traditionnelle et de l'architecture virtualisée
 
-![w:24em](./assets/seance_1/comparison_of_traditional_architecture_and_virtualized_architecture.png)
+![w:24em](./images/01-conteneurs_avec_docker/comparison_of_traditional_architecture_and_virtualized_architecture.png)
 
 Implementation and evaluation of a container management platform on Docker: Hadoop deployment as an example - Scientific Figure on ResearchGate. Available from: https://www.researchgate.net/figure/Comparison-of-traditional-architecture-and-virtualized-architecture_fig1_352545350
 
@@ -156,7 +156,7 @@ Implementation and evaluation of a container management platform on Docker: Hado
 
 ## Comparaison entre les conteneurs et les machines virtuelles
 
-![w:26em](./assets/seance_1/machine_virtuelle_vs_conteneur.png)
+![w:26em](./images/01-conteneurs_avec_docker/machine_virtuelle_vs_conteneur.png)
 
 Découvrez les conteneurs - Optimisez votre déploiement en créant des conteneurs avec Docker - OpenClassrooms : https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211306-decouvrez-les-conteneurs
 
@@ -196,7 +196,7 @@ Découvrez les conteneurs - Optimisez votre déploiement en créant des conteneu
 <!-- _class: enum -->
 <!-- _header: 3. Docker -->
 
-![bg right 85%](./assets/seance_1/docker_devops_illustration.png)
+![bg right 85%](./images/01-conteneurs_avec_docker/docker_devops_illustration.png)
 
 ## Docker
 
@@ -211,7 +211,7 @@ Découvrez les conteneurs - Optimisez votre déploiement en créant des conteneu
 
 ## Docker Architecture
 
-![w:32em](./assets/seance_1/docker_architecture.svg)
+![w:32em](./images/01-conteneurs_avec_docker/docker_architecture.svg)
 
 Docker overview | Docker Documentation : https://docs.docker.com/get-started/overview/
 
@@ -220,7 +220,7 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 <!-- _class: enum -->
 <!-- _header: 3. Docker -->
 
-![bg right 95%](./assets/seance_1/docker_engine.png)
+![bg right 95%](./images/01-conteneurs_avec_docker/docker_engine.png)
 
 ## Docker Engine
 
@@ -233,7 +233,7 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 <!-- _class: enum -->
 <!-- _header: 3. Docker -->
 
-![bg right 75%](./assets/seance_1/docker_registry_illustration.png)
+![bg right 75%](./images/01-conteneurs_avec_docker/docker_registry_illustration.png)
 
 ## Docker Registry
 
@@ -248,7 +248,7 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 <!-- _class: enum -->
 <!-- _header: 3. Docker -->
 
-![bg right 98%](./assets/seance_1/docker_image_example.png)
+![bg right 98%](./images/01-conteneurs_avec_docker/docker_image_example.png)
 
 ## Docker Image
 
@@ -263,7 +263,7 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 
 ## Docker Build & Run
 
-![w:64em](./assets/seance_1/dockerfile_image_conteneur.jpg)
+![w:64em](./images/01-conteneurs_avec_docker/dockerfile_image_conteneur.jpg)
 
 ---
 
@@ -282,7 +282,7 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 <!-- _class: enum -->
 <!-- _header: 3. Docker -->
 
-![bg right 90%](./assets/seance_1/docker_cest_vraiment_securise.png)
+![bg right 90%](./images/01-conteneurs_avec_docker/docker_cest_vraiment_securise.png)
 
 ## <!-- fit --> Qu’en est-il de la sécurité ?
 
@@ -298,7 +298,7 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 <!-- _class: enum -->
 <!-- _header: 3. Docker -->
 
-![bg right 90%](./assets/seance_1/on_fait_du_docker_boss.png)
+![bg right 90%](./images/01-conteneurs_avec_docker/on_fait_du_docker_boss.png)
 
 ## <!-- fit --> Quelles sont les limitations ?
 
