@@ -73,8 +73,8 @@ style: |
 
 ## TP: Mise à l’échelle avec les conteneurs avec Docker Compose
 
-* Ajouter des labels dans l’image API créée lors de la séance 1
-* Concevoir le Docker Compose adapté à vos images API et Redis
-* Intégrer la gestion des ressources alloués aux 2 services
-* Modifier le code applicatif en incluant les changements liés à l’intégration de Docker Compose
-* Stimuler les deux services avec Postman et  observer la consommation des ressources  systèmes avec et sans optimisation des  ressources alloués aux conteneurs
+* Concevoir le [Docker Compose](https://docs.docker.com/compose/compose-file/) adapté à votre API et Redis
+* Si nécessaire, modifier l'implémentation de votre API pour permettre son exécution avec Docker Compose
+* [Exécuter les conteneurs](](https://docs.docker.com/engine/reference/commandline/compose_up/)) pour votre API et Redis avec Docker Compose
+* [Déclarer les conditions d'exécution](https://docs.docker.com/compose/compose-file/deploy/) pour votre API avec Docker Compose
+* Relancer les conteneurs et observer la consommation de système hôte selon les ressources alloués aux conteneurs
