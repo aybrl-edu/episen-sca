@@ -75,11 +75,11 @@ style: |
 
 ## Développement
 
-* Implémenter une API exposant 2 endpoints (Create, Read) dans le langage de votre choix ([Java](https://www.java.com/en/), [NodeJS](https://nodejs.org/), [Python](https://www.python.org/)).
+* Implémenter une API exposant 2 endpoints (Create, Read) dans le langage de votre choix ([Java](https://www.java.com/en/), [NodeJS](https://nodejs.org/), [Python](https://www.python.org/), etc).
 
 ## Conteneurisation
 
-* Concevoir une image [Docker](https://docs.docker.com/) adapté à votre API précédemment implémentée.
+* Concevoir un [Dockerfile](https://docs.docker.com/engine/reference/builder/) adapté à votre API précédemment implémentée.
 * Construire puis tagger l’image [Docker](https://docs.docker.com/) en locale sur votre poste de développement.
 * Exécuter un conteneur se basant sur votre image et tester votre API en locale.
 
@@ -91,11 +91,11 @@ style: |
 
 ## Conteneurisation
 
-* Récupérer l’image officielle du middleware [Redis](https://redis.io/) depuis [Docker Hub](https://hub.docker.com/_/redis).
+* Récupérer et exécuter l’image officielle [Redis](https://redis.io/) du registre [Docker Hub](https://hub.docker.com/_/redis).
 
 ## Développement
 
-* Modifier l’implémentation de votre API pour que celle-ci soit en mesure d’insérer et lire des données depuis le composant [Redis](https://redis.io/).
+* Modifier l’implémentation de votre API pour insérer et lire des données dans [Redis](https://redis.io/).
 
 ---
 
@@ -105,5 +105,5 @@ style: |
 
 ## Conteneurisation
 
-* Construire votre image applicative intégrant la nouvelle version de votre API.
+* Construire une nouvelle version de votre image applicative intégrant la lecture et écriture dans [Redis](https://redis.io/).
 * Exécuter un conteneur à partir de la nouvelle image applicative et tester l'interopérabilité entre votre API et [Redis](https://redis.io/).
