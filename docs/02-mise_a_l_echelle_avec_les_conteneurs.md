@@ -61,6 +61,9 @@ style: |
   section.enum > h3 + ul {
     margin-top: 0.5em;
   }
+  section.h3_margin_0 h3 {
+    margin: 0;
+  }
 ---
 
 <!-- _class: dark -->
@@ -177,7 +180,7 @@ style: |
 
 ---
 
-<!-- _class: enum -->
+<!-- _class: enum h3_margin_0 -->
 <!-- _header: 2. Docker Compose -->
 
 ## Cas d’utilisations
@@ -197,10 +200,6 @@ style: |
 
 * 1 nœud local et/ou distant
 * 1 cluster Swarm
-
-<style scoped>
-h3 { margin: 0; }
-</style>
 
 ---
 
