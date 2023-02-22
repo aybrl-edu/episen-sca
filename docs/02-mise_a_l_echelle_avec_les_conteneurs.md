@@ -281,8 +281,8 @@ volumes:
 
 ## Références
 
-* Docker<br>https://docs.docker.com
 * Docker Compose<br>https://docs.docker.com/compose
+* Docker Compose CLI reference<br>https://docs.docker.com/engine/reference/commandline/compose/#child-commands
 * Docker Compose file specification<br>https://docs.docker.com/compose/compose-file
 * Dockerfile reference<br>https://docs.docker.com/engine/reference/builder
 * Moby<br>https://mobyproject.org
