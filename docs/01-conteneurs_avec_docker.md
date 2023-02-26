@@ -263,7 +263,10 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 
 ## Docker Build & Run
 
-![w:64em](./images/01-conteneurs_avec_docker/dockerfile_image_conteneur.jpg)
+![w:22em](./images/01-conteneurs_avec_docker/dockerfile_build_and_run.jpg)
+
+Getting started with Docker - images and containers - By Fernando Briano - 6 november, 2017
+https://cultivatehq.com/posts/docker/
 
 ---
 
