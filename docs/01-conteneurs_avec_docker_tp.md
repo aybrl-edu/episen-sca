@@ -1,7 +1,7 @@
 ---
 marp: true
-title: episen_sca_seance_1_tp
-description: episen_sca_seance_1_tp
+title: 01-conteneurs_avec_docker_tp
+description: 01-conteneurs_avec_docker_tp
 paginate: true
 theme: default
 style: |

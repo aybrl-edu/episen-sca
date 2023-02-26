@@ -1,7 +1,7 @@
 ---
 marp: true
-title: episen_sca_seance_2
-description: episen_sca_seance_2
+title: 02-mise_a_l_echelle_avec_les_conteneurs
+description: 02-mise_a_l_echelle_avec_les_conteneurs
 paginate: true
 theme: default
 style: |
@@ -110,12 +110,12 @@ style: |
 
 ## Mise à l’échelle manuelle de conteneurs
 
-![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/je_lance_n_fois_docker_run.png)
-
 * Tâche répétitive
 * Action manuelle
 * Sujette aux erreurs humaines
 * Inadaptée pour un grand nombre de conteneurs à démarrer dans un laps de temps réduit
+
+![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/je_lance_n_fois_docker_run.png)
 
 ---
 
@@ -123,22 +123,20 @@ style: |
 <!-- _header: 1. Mise à l'échelle avec les conteneurs -->
 
 ## Mise à l'échelle automatique de conteneurs
-
-![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/et_si_on_utilisait_un_orchestrateur.png)
 
 * [Docker Compose](https://docs.docker.com/compose/) pour **exécuter des applications multi-conteneurs**
 * Approche déclarative basée sur du code donc traçable dans le temps
 * Utilisable pour l’ensemble des composants d'une application
 * Réplication gérée par [Compose](https://docs.docker.com/compose/)
 
+![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/et_si_on_utilisait_un_orchestrateur.png)
+
 ---
 
 <!-- _class: enum -->
 <!-- _header: 1. Mise à l'échelle avec les conteneurs -->
 
 ## Mise à l'échelle automatique de conteneurs
-
-![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/si_jetais_vous_jutiliserais_un_ordchestrateur.png)
 
 * Traçabilité des actions
 * Approche déclarative
@@ -146,6 +144,8 @@ style: |
 * Automatisation des processus
 * Nécessite une montée en compétences des équipes devops
 * Déploiement des conteneurs sur des multiples hosts possible
+
+![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/si_jetais_vous_jutiliserais_un_ordchestrateur.png)
 
 ---
 
@@ -172,11 +172,11 @@ style: |
 
 ## Introduction
 
-![bg right 75%](./images/02-mise_a_l_echelle_avec_les_conteneurs/octopus.png)
-
 * Outil faisant partie de l’écosystème Docker
 * Définition, exécution de conteneurs dans N environnements isolés sur un nœud
 * Fichier de description se basant sur un langage standard: YAML
+
+![bg right 75%](./images/02-mise_a_l_echelle_avec_les_conteneurs/octopus.png)
 
 ---
 
@@ -229,7 +229,7 @@ volumes:
 
 <!-- _paginate: false -->
 
-# <!-- fit --> 3. Pourquoi faut-il optimiser les ressources alloués aux conteneurs
+# 3. Pourquoi faut-il optimiser les ressources alloués aux conteneurs
 
 ---
 

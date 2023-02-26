@@ -1,7 +1,7 @@
 ---
 marp: true
-title: episen_sca_seance_2_tp
-description: episen_sca_seance_2_tp
+title: 02-mise_a_l_echelle_avec_les_conteneurs_tp
+description: 02-mise_a_l_echelle_avec_les_conteneurs_tp
 paginate: true
 theme: default
 style: |
