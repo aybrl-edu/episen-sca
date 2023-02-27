@@ -2,9 +2,14 @@
 marp: true
 title: 02-mise_a_l_echelle_avec_les_conteneurs_tp
 description: 02-mise_a_l_echelle_avec_les_conteneurs_tp
+headingDivider: 2
 paginate: true
 theme: default
 style: |
+  section h3 {
+    margin-bottom: 0.75em;
+    font-size: 1.3em;
+  }
   section.dark {
     background: #123;
   }
@@ -58,20 +63,18 @@ style: |
     display: inline-block;
     margin-right: 0.1875em;
   }
-
 ---
-
-<!-- _class: dark -->
-<!-- _header: Scalabilité, Virtualisation et Conteneurisation -->
-<!-- _paginate: false -->
 
 # TP 2 - Mise à l'échelle avec les conteneurs
 
----
+<!-- header: Scalabilité, Virtualisation et Conteneurisation -->
+<!-- _class: dark -->
+<!-- _paginate: false -->
 
+## Mise à l’échelle avec les conteneurs et Docker Compose
+
+<!-- header: TP 2 - Mise à l'échelle avec les conteneurs -->
 <!-- _class: enum -->
-
-## TP: Mise à l’échelle avec les conteneurs avec Docker Compose
 
 * Concevoir le [Docker Compose](https://docs.docker.com/compose/compose-file/) adapté à votre API et Redis
 * Si nécessaire, modifier l'implémentation de votre API pour permettre son exécution avec Docker Compose

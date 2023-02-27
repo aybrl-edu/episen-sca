@@ -2,9 +2,14 @@
 marp: true
 title: 02-mise_a_l_echelle_avec_les_conteneurs
 description: 02-mise_a_l_echelle_avec_les_conteneurs
+headingDivider: 3
 paginate: true
 theme: default
 style: |
+  section h3 {
+    margin-bottom: 0.75em;
+    font-size: 1.3em;
+  }
   section.dark {
     background: #123;
   }
@@ -66,35 +71,31 @@ style: |
   }
 ---
 
-<!-- _class: dark -->
-<!-- _header: Scalabilité, Virtualisation et Conteneurisation -->
-<!-- _paginate: false -->
-
 # Séance 2 - Mise à l'échelle avec les conteneurs
 
----
-
-<!-- _class: toc -->
+<!-- header: Scalabilité, Virtualisation et Conteneurisation -->
+<!-- _class: dark -->
 <!-- _paginate: false -->
 
 ## Sommaire
+
+<!-- header: Séance 2 - Mise à l'échelle avec les conteneurs -->
+<!-- _class: toc -->
+<!-- _paginate: false -->
 
 1. Mise à l'échelle avec les conteneurs
 2. Docker Compose
 3. Optimisation des ressources allouées aux conteneurs
 
----
+## <!-- fit --> 1. Mise à l'échelle avec les conteneurs
 
+<!-- header: Séance 2 - Mise à l'échelle avec les conteneurs -->
 <!-- _paginate: false -->
 
-# <!-- fit --> 1. Mise à l'échelle avec les conteneurs
+### La mise à l’échelle est-elle complexe ?
 
----
-
+<!-- header: Séance 2 - Mise à l'échelle avec les conteneurs » 1. Mise à l'échelle avec les conteneurs -->
 <!-- _class: enum -->
-<!-- _header: 1. Mise à l'échelle avec les conteneurs -->
-
-## La mise à l’échelle est-elle complexe ?
 
 * Maîtriser le périmètre métier de l'application
 * Calculer les ressources nécessaires à l’exécution de l'application
@@ -103,12 +104,9 @@ style: |
 * Qui opère cette mise à l’échelle ?
 * Qu’est-ce qui justifie une mise à l’échelle d’un composant ?
 
----
+### Mise à l’échelle manuelle de conteneurs
 
 <!-- _class: enum -->
-<!-- _header: 1. Mise à l'échelle avec les conteneurs -->
-
-## Mise à l’échelle manuelle de conteneurs
 
 * Tâche répétitive
 * Action manuelle
@@ -117,12 +115,9 @@ style: |
 
 ![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/je_lance_n_fois_docker_run.png)
 
----
+### Mise à l'échelle automatique de conteneurs (1)
 
 <!-- _class: enum -->
-<!-- _header: 1. Mise à l'échelle avec les conteneurs -->
-
-## Mise à l'échelle automatique de conteneurs
 
 * [Docker Compose](https://docs.docker.com/compose/) pour **exécuter des applications multi-conteneurs**
 * Approche déclarative basée sur du code donc traçable dans le temps
@@ -131,12 +126,9 @@ style: |
 
 ![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/et_si_on_utilisait_un_orchestrateur.png)
 
----
+### Mise à l'échelle automatique de conteneurs (2)
 
 <!-- _class: enum -->
-<!-- _header: 1. Mise à l'échelle avec les conteneurs -->
-
-## Mise à l'échelle automatique de conteneurs
 
 * Traçabilité des actions
 * Approche déclarative
@@ -147,30 +139,24 @@ style: |
 
 ![bg right 85%](./images/02-mise_a_l_echelle_avec_les_conteneurs/si_jetais_vous_jutiliserais_un_ordchestrateur.png)
 
----
+### Mauvaises pratiques pour la mise à l'échelle
 
 <!-- _class: enum -->
-<!-- _header: 1. Mise à l'échelle avec les conteneurs -->
-
-## Mauvaises pratiques pour la mise à l'échelle
 
 * Négliger le dimensionnement de l’infrastructure du cluster de l’orchestrateur (Swarm, k8s)
 * Mauvaise définition des rôles et responsabilités devops
 * Ne pas connaître les besoins systèmes des composants applicatifs
 * Omettre la maintenance du cluster et ses versions
 
----
+## <!-- fit --> 2. Docker Compose
 
+<!-- header: Séance 2 - Mise à l'échelle avec les conteneurs -->
 <!-- _paginate: false -->
 
-# <!-- fit --> 2. Docker Compose
+### Introduction
 
----
-
+<!-- header: Séance 2 - Mise à l'échelle avec les conteneurs » 2. Docker Compose -->
 <!-- _class: enum -->
-<!-- _header: 2. Docker Compose -->
-
-## Introduction
 
 * Outil faisant partie de l’écosystème Docker
 * Définition, exécution de conteneurs dans N environnements isolés sur un nœud
@@ -178,34 +164,27 @@ style: |
 
 ![bg right 75%](./images/02-mise_a_l_echelle_avec_les_conteneurs/octopus.png)
 
----
+### Cas d’utilisations
 
 <!-- _class: enum h3_margin_0 -->
-<!-- _header: 2. Docker Compose -->
 
-## Cas d’utilisations
-
-### Environnement de développement simplifié
+#### Environnement de développement simplifié
 
 * Guide d’un nouvel arrivant simplifié
 * Simuler un environnement isolé de bout-en-bout (application, database, cache)
 * Gain de temps et de productivité pour l’équipe de développement
 
-### Environnement de test automatisé
+#### Environnement de test automatisé
 
 * Exécution simplifié des tests end-to-end
 * Mise en place d’une stack technique sur demande pour l’exécution des tests
 
-### Déploiement
+#### Déploiement
 
 * 1 nœud local et/ou distant
 * 1 cluster Swarm
 
----
-
-<!-- _header: 2. Docker Compose -->
-
-## Exemple de Docker Compose
+### Exemple de Docker Compose
 
 ```yaml
 version: '3'
@@ -225,60 +204,50 @@ volumes:
   logvolume: {}
 ```
 
----
+## 3. Pourquoi faut-il optimiser les ressources alloués aux conteneurs
 
+<!-- header: Séance 2 - Mise à l'échelle avec les conteneurs -->
 <!-- _paginate: false -->
 
-# 3. Pourquoi faut-il optimiser les ressources alloués aux conteneurs
+### Contexte
 
----
-
+<!-- header: Séance 2 - Mise à l'échelle avec les conteneurs » 3. Pourquoi faut-il optimiser les ressources alloués aux conteneurs -->
 <!-- _class: enum -->
-<!-- _header: 3. Pourquoi faut-il optimiser les ressources alloués aux conteneurs -->
-
-## Contexte
 
 * Un conteneur peut avoir besoin de : Stockage, CPU, RAM
 * Une fuite mémoire dans l’application s’exécutant dans le conteneur
 * Une attaque extérieur provoquant un accroissement des ressources systèmes
 * Mauvaise configuration des ressources systèmes pour un conteneur X
 
----
+### Les risques du mode « no-limit »
 
 <!-- _class: enum -->
-<!-- _header: 3. Pourquoi faut-il optimiser les ressources alloués aux conteneurs -->
 
-## Les risques du mode « no-limit »
-
-### Out of Memory Exception
+#### Out of Memory Exception
 
 * Arrêt de processus « important » par le kernel Unix
 * Indisponibilité de l’application en Production
 * Instabilité de la plateforme de Production
 
-### Accès illimité aux cycles CPUs d’une machine hôte (virtuelle, physique)
+#### Accès illimité aux cycles CPUs d’une machine hôte (virtuelle, physique)
 
 * Instabilité de la machine hôte
 * Effets de bords sur les autres conteneurs hébergés sur la machine hôte
 
----
+### Bonnes pratiques
 
 <!-- _class: enum -->
-<!-- _header: 3. Pourquoi faut-il optimiser les ressources alloués aux conteneurs -->
-
-## Bonnes pratiques
 
 * Connaître les besoins en mémoire de son application via des phases de tests
 * Limiter les ressources mémoire nécessaire au bon fonctionnement de l’application
 * Ajuster la configuration de la SWAP sur les hôtes Docker
 * Définir des limites sur les accès aux cycles CPUs de la machine hôte
 
----
+### Références
 
+<!-- header: "" -->
 <!-- _class: dark references -->
 <!-- _paginate: false -->
-
-## Références
 
 * Docker Compose<br>https://docs.docker.com/compose
 * Docker Compose CLI reference<br>https://docs.docker.com/engine/reference/commandline/compose/#child-commands

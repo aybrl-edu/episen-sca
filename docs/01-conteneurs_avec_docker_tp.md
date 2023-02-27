@@ -2,9 +2,14 @@
 marp: true
 title: 01-conteneurs_avec_docker_tp
 description: 01-conteneurs_avec_docker_tp
+headingDivider: 2
 paginate: true
 theme: default
 style: |
+  section h3 {
+    margin-bottom: 0.75em;
+    font-size: 1.3em;
+  }
   section.dark {
     background: #123;
   }
@@ -58,52 +63,46 @@ style: |
     display: inline-block;
     margin-right: 0.1875em;
   }
-
 ---
-
-<!-- _class: dark -->
-<!-- _header: Scalabilité, Virtualisation et Conteneurisation -->
-<!-- _paginate: false -->
 
 # TP 1 - Conteneurs avec Docker
 
----
+<!-- header: Scalabilité, Virtualisation et Conteneurisation -->
+<!-- _class: dark -->
+<!-- _paginate: false -->
 
+## Partie 1
+
+<!-- header: TP 1 - Conteneurs avec Docker -->
 <!-- _class: enum -->
 
-# Partie 1
-
-## Développement
+### Développement
 
 * Implémenter une API exposant 2 endpoints (Create, Read) dans le langage de votre choix ([Java](https://www.java.com/en/), [NodeJS](https://nodejs.org/), [Python](https://www.python.org/), etc).
 
-## Conteneurisation
+### Conteneurisation
 
 * Concevoir un [Dockerfile](https://docs.docker.com/engine/reference/builder/) adapté à votre API précédemment implémentée.
 * Construire puis tagger l’image [Docker](https://docs.docker.com/) en locale sur votre poste de développement.
 * Exécuter un conteneur se basant sur votre image et tester votre API en locale.
 
----
+## Partie 2
 
 <!-- _class: enum -->
 
-# Partie 2
-
-## Conteneurisation
+### Conteneurisation
 
 * Récupérer et exécuter l’image officielle [Redis](https://redis.io/) du registre [Docker Hub](https://hub.docker.com/_/redis).
 
-## Développement
+### Développement
 
 * Modifier l’implémentation de votre API pour insérer et lire des données dans [Redis](https://redis.io/).
 
----
+## Partie 3
 
 <!-- _class: enum -->
 
-# Partie 3
-
-## Conteneurisation
+### Conteneurisation
 
 * Construire une nouvelle version de votre image applicative intégrant la lecture et écriture dans [Redis](https://redis.io/).
 * Exécuter un conteneur à partir de la nouvelle image applicative et tester l'interopérabilité entre votre API et [Redis](https://redis.io/).

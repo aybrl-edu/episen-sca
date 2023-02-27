@@ -2,9 +2,14 @@
 marp: true
 title: 01-conteneurs_avec_docker
 description: 01-conteneurs_avec_docker
+headingDivider: 3
 paginate: true
 theme: default
 style: |
+  section h3 {
+    margin-bottom: 0.75em;
+    font-size: 1.3em;
+  }
   section.dark {
     background: #123;
   }
@@ -58,114 +63,90 @@ style: |
     display: inline-block;
     margin-right: 0.1875em;
   }
-
 ---
-
-<!-- _class: dark -->
-<!-- _header: Scalabilité, Virtualisation et Conteneurisation -->
-<!-- _paginate: false -->
 
 # Séance 1 - Conteneurs avec Docker
 
----
-
-<!-- _class: toc -->
+<!-- header: Scalabilité, Virtualisation et Conteneurisation -->
+<!-- _class: dark -->
 <!-- _paginate: false -->
 
 ## Sommaire
+
+<!-- header: Séance 1 - Conteneurs avec Docker -->
+<!-- _class: toc -->
+<!-- _paginate: false -->
 
 1. Virtualisation
 2. Conteneurisation
 3. Docker
 
+## <!-- fit --> 1. Virtualisation
 
----
-
+<!-- header: Séance 1 - Conteneurs avec Docker -->
 <!-- _paginate: false -->
 
-# <!-- fit --> 1. Virtualisation
+### Qu'est-ce que la virtualisation ? 💡
 
----
-
+<!-- header: Séance 1 - Conteneurs avec Docker » 1. Virtualisation -->
 <!-- _class: enum -->
-<!-- _header: 1. Virtualisation -->
-
-## Qu'est-ce que la virtualisation ? 💡
 
 * Technologie utilisée pour **créer des représentations virtuelles** de serveurs, de stockage, de réseaux et d'autres machines physiques
 * **Imiter le fonctionnement de matériel physique** pour exécuter plusieurs machines virtuelles sur une seule machine physique
 * Permettre une **utilisation plus efficace des ressources matérielles**
 * Base du cloud computing « Infrastructure en tant que service » (IaaS)
 
----
+### Comparaison de l'architecture traditionnelle et de l'architecture virtualisée
 
 <!-- _class: figure -->
-<!-- _header: 1. Virtualisation -->
-
-## Comparaison de l'architecture traditionnelle et de l'architecture virtualisée
 
 ![w:24em](./images/01-conteneurs_avec_docker/comparison_of_traditional_architecture_and_virtualized_architecture.png)
 
 Implementation and evaluation of a container management platform on Docker: Hadoop deployment as an example - Scientific Figure on ResearchGate. Available from: https://www.researchgate.net/figure/Comparison-of-traditional-architecture-and-virtualized-architecture_fig1_352545350
 
----
+### Quels avantages de la virtualisation ? 👍
 
 <!-- _class: enum -->
-<!-- _header: 1. Virtualisation -->
-
-## Quels avantages de la virtualisation ? 👍
 
 * **Utilisation efficace des ressources matérielles** permettant d'économiser sur le matériel par mutualisation (réduction des coûts : achat, hébergement, maintenance, ...)
 * **Gestion informatique automatisée** permettant d'éviter les configurations manuelles sujettes aux erreurs
 * **Reprise plus rapide après sinistre** permettant d'améliorer considérablement la résilience et facilite la continuité des activités
 
----
+### Quels inconvénients de la virtualisation ? 👎
 
 <!-- _class: enum -->
-<!-- _header: 1. Virtualisation -->
-
-## Quels inconvénients de la virtualisation ? 👎
 
 * **Performance dégradée** par la couche d'abstraction matérielle (l'exécution d'un logiciel virtualisé consommera davantage de ressources qu'en mode natif)
 * Sans redondance, la panne d'une machine hôte impacte l'ensemble des machines virtuelles hébergées
 * **Investissement initial** car la mise en oeuvre est complexe
 * Possibles **contraintes administratives** (déploiement, sauvegarde, ...)
 
----
+## <!-- fit --> 2. Conteneurisation
 
+<!-- header: Séance 1 - Conteneurs avec Docker -->
 <!-- _paginate: false -->
 
-# <!-- fit --> 2. Conteneurisation
+### Qu'est-ce que la conteneurisation ? 💡
 
----
-
+<!-- header: Séance 1 - Conteneurs avec Docker » 2. Conteneurisation -->
 <!-- _class: enum -->
-<!-- _header: 2. Conteneurisation -->
-
-## Qu'est-ce que la conteneurisation ? 💡
 
 * Technologie utilisée pour **créer des instances d'espace utilisateur isolées**
 * **Un conteneur est une enveloppe virtuelle** (sources, environnement d'exécution, librairies, outils et fichiers) assemblée en un ensemble cohérent et prêt à être déployé
 * Un programme d'un conteneur est **limité à son contenu et aux périphériques associés** (isolation du processus applicatif du reste du système)
 * S'appuie sur le noyau du système d'exploitation sur lequel il est déployé (de l'hôte)
 
----
+### Comparaison entre les conteneurs et les machines virtuelles
 
 <!-- _class: figure -->
-<!-- _header: 2. Conteneurisation -->
-
-## Comparaison entre les conteneurs et les machines virtuelles
 
 ![w:26em](./images/01-conteneurs_avec_docker/machine_virtuelle_vs_conteneur.png)
 
 Découvrez les conteneurs - Optimisez votre déploiement en créant des conteneurs avec Docker - OpenClassrooms : https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211306-decouvrez-les-conteneurs
 
----
+### Quels avantages de la conteneurisation ? 👍
 
 <!-- _class: enum -->
-<!-- _header: 2. Conteneurisation -->
-
-## Quels avantages de la conteneurisation ? 👍
 
 * **Agilité** ~ Raccourcir les cycles de publication et travailler rapidement sur les mises à jour avec le modèle de conteneur
 * **Capacité de mise à l’échelle** ~ Ajouter facilement plusieurs conteneurs pour réaliser de la scalabilité horizontale
@@ -173,30 +154,24 @@ Découvrez les conteneurs - Optimisez votre déploiement en créant des conteneu
 * **Portabilité** ~ Déployer une application dans plusieurs environnements sans réécrire le code du programme
 * **Tolérance aux pannes** ~ Créer plusieurs conteneurs augmente la résilience et la disponibilité de l'application
 
----
+### Quels inconvénients de la conteneurisation ? 👎
 
 <!-- _class: enum -->
-<!-- _header: 2. Conteneurisation -->
-
-## Quels inconvénients de la conteneurisation ? 👎
 
 * Pas adapté pour les applications qui nécessitent une interface graphique
 * Difficulté à gérer une grande quantité de conteneurs
 * Pas de compatibilité multiplateforme (une application conçue pour s'exécuter dans un conteneur sur Windows, ne peut pas s'exécuter dans un conteneur sur Linux)
 * Ne fournit pas de solution pour la sauvegarde et la récupération de données
 
----
+## <!-- fit --> 3. Docker
 
+<!-- header: Séance 1 - Conteneurs avec Docker -->
 <!-- _paginate: false -->
 
-# <!-- fit --> 3. Docker
+### Docker
 
----
-
+<!-- header: Séance 1 - Conteneurs avec Docker » 3. Docker -->
 <!-- _class: enum -->
-<!-- _header: 3. Docker -->
-
-## Docker
 
 * Créé dans les années 2010 par [Solomon Hykes](https://fr.wikipedia.org/wiki/Solomon_Hykes) (_dotCloud_)
 * Plateforme permettant de **lancer des applications dans des conteneurs logiciels**
@@ -204,23 +179,17 @@ Découvrez les conteneurs - Optimisez votre déploiement en créant des conteneu
 
 ![bg right 85%](./images/01-conteneurs_avec_docker/docker_devops_illustration.png)
 
----
+### Docker Architecture
 
 <!-- _class: figure -->
-<!-- _header: 3. Docker -->
-
-## Docker Architecture
 
 ![w:32em](./images/01-conteneurs_avec_docker/docker_architecture.svg)
 
 Docker overview | Docker Documentation : https://docs.docker.com/get-started/overview/
 
----
+### Docker Engine
 
 <!-- _class: enum -->
-<!-- _header: 3. Docker -->
-
-## Docker Engine
 
 * **docker daemon** (dockerd) : processus long chargé de la création et de la gestion des conteneurs
 * **REST API** : API REST définissant un ensemble d’interfaces pour interagir avec dockerd
@@ -228,12 +197,9 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 
 ![bg right 95%](./images/01-conteneurs_avec_docker/docker_engine.png)
 
----
+### Docker Registry
 
 <!-- _class: enum -->
-<!-- _header: 3. Docker -->
-
-## Docker Registry
 
 * Un registre Docker **stocke des images Docker**
 * [Docker Hub](https://hub.docker.com/) est un registre public configuré par défaut
@@ -243,12 +209,9 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 
 ![bg right 75%](./images/01-conteneurs_avec_docker/docker_registry_illustration.png)
 
----
+### Docker Image
 
 <!-- _class: enum -->
-<!-- _header: 3. Docker -->
-
-## Docker Image
 
 * Toute image Docker repose sur une image source (Ubuntu, CentOS, Debian, Alpine)
 * Une image contient _n_ instructions permettant sa construction
@@ -256,36 +219,27 @@ Docker overview | Docker Documentation : https://docs.docker.com/get-started/ove
 
 ![bg right 98%](./images/01-conteneurs_avec_docker/docker_image_example.png)
 
----
+### Docker Build & Run
 
 <!-- _class: figure -->
-<!-- _header: 3. Docker -->
-
-## Docker Build & Run
 
 ![w:22em](./images/01-conteneurs_avec_docker/dockerfile_build_and_run.jpg)
 
 Getting started with Docker - images and containers - By Fernando Briano - 6 november, 2017
 https://cultivatehq.com/posts/docker/
 
----
+### Pourquoi adopter Docker ?
 
 <!-- _class: enum -->
-<!-- _header: 3. Docker -->
-
-## Pourquoi adopter Docker ?
 
 * Accélérer le développement d’une application métier
 * Intégration simple dans les chaînes d'intégration et de déploiement continues ([Gitlab CI/CD](https://docs.gitlab.com/ee/ci/), [Bitbucket](http://bitbuck.com/), [CircleCI](https://circleci.com/), ...)
 * Un conteneur est de part sa nature « portable », capacité à s’exécuter une machine locale, serveur physique ou virtuel, cloud
 * La taille réduite d’un conteneur et le fait qu’il soit « stateless » permet une montée en charge horizontale simplifiée en un temps très court
 
----
+### Qu’en est-il de la sécurité ?
 
 <!-- _class: enum -->
-<!-- _header: 3. Docker -->
-
-## Qu’en est-il de la sécurité ?
 
 * Un conteneur (et ses privilèges) est un processus classique
 * Attention à ne pas exécuter les processus sous l’utilisateur « root »
@@ -296,12 +250,9 @@ https://cultivatehq.com/posts/docker/
 
 ![bg right 90%](./images/01-conteneurs_avec_docker/docker_cest_vraiment_securise.png)
 
----
+### <!-- fit --> Quelles sont les limitations ?
 
 <!-- _class: enum -->
-<!-- _header: 3. Docker -->
-
-## <!-- fit --> Quelles sont les limitations ?
 
 * Comment orchestrer des dizaines, centaines de conteneurs uniques à la base ?
 * Compliqué d’avoir un service type « cron », « syslog » au sein d’un conteneur Docker
@@ -309,12 +260,11 @@ https://cultivatehq.com/posts/docker/
 
 ![bg right 90%](./images/01-conteneurs_avec_docker/on_fait_du_docker_boss.png)
 
----
+## Références
 
+<!-- header: "" -->
 <!-- _class: dark references -->
 <!-- _paginate: false -->
-
-## Références
 
 * AWS - Qu’est-ce que la conteneurisation ?<br>https://aws.amazon.com/fr/what-is/containerization/
 * AWS - Qu'est-ce que la virtualisation ?<br>https://aws.amazon.com/fr/what-is/virtualization/
