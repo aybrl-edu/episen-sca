@@ -77,9 +77,9 @@ style: |
 <!-- _class: toc -->
 <!-- _paginate: false -->
 
-1. Virtualisation
-2. Conteneurisation
-3. Docker
+1. [Virtualisation](#-1-virtualisation)
+2. [Conteneurisation](#-2-conteneurisation)
+3. [Docker](#-3-docker)
 
 ## <!-- fit --> 1. Virtualisation
 

@@ -83,9 +83,9 @@ style: |
 <!-- _class: toc -->
 <!-- _paginate: false -->
 
-1. Mise à l'échelle avec les conteneurs
-2. Docker Compose
-3. Optimisation des ressources allouées aux conteneurs
+1. [Mise à l'échelle avec les conteneurs](#-1-mise-à-léchelle-avec-les-conteneurs)
+2. [Docker Compose](#-2-docker-compose)
+3. [Optimisation des ressources allouées aux conteneurs](#3-pourquoi-faut-il-optimiser-les-ressources-alloués-aux-conteneurs)
 
 ## <!-- fit --> 1. Mise à l'échelle avec les conteneurs
 
