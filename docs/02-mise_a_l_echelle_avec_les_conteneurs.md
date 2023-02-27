@@ -243,7 +243,7 @@ volumes:
 * Ajuster la configuration de la SWAP sur les hôtes Docker
 * Définir des limites sur les accès aux cycles CPUs de la machine hôte
 
-### Références
+## Références
 
 <!-- header: "" -->
 <!-- _class: dark references -->
