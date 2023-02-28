@@ -14,3 +14,4 @@ docker rmi --force episen-sca/test
 
 docker image prune --force
 docker network prune --force
+docker volume prune --force
