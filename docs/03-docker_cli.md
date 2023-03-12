@@ -321,14 +321,14 @@ docker compose ls
 ### Créer+démmarer et stopper+supprimer un projet Compose
 
 ```sh
-docker compose up [options] [service...]
-docker compose down [options]
+docker compose [--project-name <name>] up [options] [service...]
+docker compose [--project-name <name>] down [options]
 ```
 
 ### Lister les conteneurs d'un projet Compose
 
 ```sh
-docker compose ps
+docker compose [--project-name <name>] ps
 ```
 
 ## 8. Compose (2)
@@ -336,21 +336,21 @@ docker compose ps
 ### Afficher les processus en cours d'exécution d'un projet Compose
 
 ```sh
-docker compose top [service...]
+docker compose [--project-name <name>] top [service...]
 ```
 
 ### Démarrer/arrêter des services d'un projet Compose
 
 ```sh
-docker compose start [service...]
-docker compose stop [service...]
+docker compose [--project-name <name>] start [service...]
+docker compose [--project-name <name>] stop [service...]
 ```
 
 ### Mettre en pause/reprendre l'exécution de services d'un projet Compose
 
 ```sh
-docker compose pause [service...]
-docker compose unpause [service...]
+docker compose [--project-name <name>] pause [service...]
+docker compose [--project-name <name>] unpause [service...]
 ```
 
 
