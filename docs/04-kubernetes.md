@@ -109,14 +109,14 @@ style: |
 * **Orchestre les ressources machines (_computing_), la mise en réseau et l'infrastructure de stockage sur les workloads des utilisateurs**
 * Se rapproche de la simplicité des _Platform as a Service_ (PaaS) avec la flexibilité des solutions d'_Infrastructure as a Service_ (IaaS), tout en gardant de la portabilité entre les différents fournisseurs d'infrastructures (_providers_)
 
-### Pourquoi les conteneurs ?
+### Pourquoi les conteneurs (1/3) ?
 
 <!-- _class: figure -->
 
 ![w:48em](./images/04-kubernetes/why_containers.svg)
 Kubernetes Documentation / Concepts / Vue d'ensemble / Qu'est-ce-que Kubernetes ? : https://kubernetes.io/fr/docs/concepts/overview/what-is-kubernetes/
 
-### Pourquoi les conteneurs ? (2)
+### Pourquoi les conteneurs ? (2/3)
 
 <!-- _class: enum -->
 
@@ -126,7 +126,7 @@ Kubernetes Documentation / Concepts / Vue d'ensemble / Qu'est-ce-que Kubernetes 
 * **Observabilité** : Informations venant non seulement du système d'exploitation sous-jacent mais aussi des signaux propres de l'application.
 * **Consistance entre les environnements de développement, tests et production** : Fonctionne de la même manière que ce soit sur un poste local que chez un fournisseur.
 
-### Pourquoi les conteneurs ? (3)
+### Pourquoi les conteneurs ? (3/3)
 
 <!-- _class: enum -->
 
@@ -157,7 +157,7 @@ Kubernetes Documentation / Concepts / Vue d'ensemble / Qu'est-ce-que Kubernetes 
 
 Un cluster Kubernetes est composé de _worker nodes_ pilotés par un _control plane_.
 
-#### Control Plane
+#### Control Plane / Master node
 
 * Couche d'orchestration qui planifie et répond aux événements du cluster
 * Expose l'[API Kubernetes](https://kubernetes.io/docs/concepts/overview/kubernetes-api/) pour gérer le cycle de vie des conteneurs
@@ -181,7 +181,7 @@ Diagramme d'architecture de Kubernetes : https://fr.wikipedia.org/wiki/Kubernete
 
 <!-- _class: enum -->
 
-* [`etcd`](https://kubernetes.io/docs/concepts/overview/components/#etcd) : Base de stockage (clé-valeur) distribuée des données de configuration représentant l'état du cluster
+* [`etcd`](https://etcd.io/) : Base de stockage (clé-valeur) distribuée des données de configuration représentant l'état du cluster
 * [`kube-apiserver`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/) : Serveur HTTP exposant l'[API Kubernetes](https://kubernetes.io/docs/concepts/overview/kubernetes-api/) (voir [client libraries](https://kubernetes.io/docs/reference/using-api/client-libraries/))
 * [`kube-scheduler`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-scheduler/) : Ordonnanceur surveillant les Pods nouvellement créés qui ne sont pas assignés à un nœud et sélectionne un nœud sur lequel ils vont s'exécuter
 * [`kube-controller-manager`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-controller-manager/) : Le gestionnaire de contrôle est le processus dans lequel s'exécutent les contrôleurs principaux de Kubernetes et assurent l'état désiré du cluster
@@ -213,29 +213,64 @@ Les addons utilisent les ressources Kubernetes (DaemonSet, Déploiement, etc) po
 <!-- _class: figure -->
 
 
-![w:46em](./images/04-kubernetes/sequence_de_planification_dun_pod.svg)
+![w:58em](./images/04-kubernetes/sequence_de_planification_dun_pod.svg)
 
 <!--
 ```mermaid
 sequenceDiagram
-    user->>api_server: Create pod
-    api_server->>+etcd: Save state
-    etcd-- >>-api_server: acknowledge
-    scheduler->>+api_server: Watch for unasigned pods
-    api_server-- >>-scheduler: Pod (with nodeName="")
-    scheduler->>+api_server: Bind pod to a node
-    api_server->>+etcd: Save state
-    etcd-- >>-api_server: acknowledge
-    api_server-- >>-scheduler: acknowledge
-    kubelet->>+api_server: Watch for bound pods
-    api_server-- >>-kubelet: New pod
-    kubelet->>cri: Start container
-    kubelet->>+api_server: Bind pod to a node
-    api_server->>+etcd: Save state
-    etcd-- >>-api_server: acknowledge
-    api_server-- >>-kubelet: acknowledge
+  user/kubectl->>+master/api_server: Créer un Pod
+  master/api_server-)+master/etcd: Sauvegarder l'état
+  master/api_server-- >>-user/kubectl: Ok
+  rect rgb(159,252,253)
+    master/scheduler->>+master/api_server: Observer les Pods non-assignés
+    master/api_server-- >>-master/scheduler: Pod (with nodeName="")
+    master/scheduler->>+master/api_server: Assigner un Pod à un node
+    master/api_server-)master/etcd: Sauvegarder l'état
+    master/api_server-- >>-master/scheduler: Ok
+  end
+  rect rgb(255,254,145)
+    worker/kubelet->>+master/api_server: Observer les Pods assignés
+    master/api_server-- >>-worker/kubelet: Nouveau Pod
+    worker/kubelet->>worker/container_runtime: Démarrer le(s) conteneur(s)
+    worker/kubelet->>+master/api_server: Mettre à jour l'état du Pod
+    master/api_server-)master/etcd: Sauvegarder l'état
+    master/api_server-- >>-worker/kubelet: Ok
+  end
 ```
 -->
+
+### Kubernetes Dashboard (1/2)
+
+<!-- _class: enum -->
+
+* **Interface web pour gérer des clusters Kubernetes** ([dépôt GitHub](https://github.com/kubernetes/dashboard))
+* Déployer le Dashboard :
+  ```shell
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+  ```
+* Tunnel sécurisé d'accès :
+  ```shell
+  kubectl proxy
+  ```
+* URL d'accès au Dashboard : http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/
+
+![bg right 100%](./images/04-kubernetes/k8s-dashboard.png)
+
+### Kubernetes Dashboard (2/2)
+
+<!-- _class: enum -->
+
+* Créer un _ServiceAccount_ `admin-user` avec un _ClusterRoleBinding_ `cluster-admin` dans le namespace `kubernetes-dashboard` ([manifest](./k8s/dashboard-adminuser.yaml)) :
+  ```shell
+  kubectl apply -f docs/k8s/dashboard-adminuser.yaml
+  ```
+* Créer un Bearer Token :
+  ```shell
+  kubectl -n kubernetes-dashboard create token admin-user
+  ```
+* Voir [guide pour obtenir un token d'accès au Dashboard](https://github.com/kubernetes/dashboard/blob/master/docs/user/access-control/creating-sample-user.md)
+
+![bg right 100%](./images/04-kubernetes/k8s-dashboard-signin.png)
 
 ## <!-- fit --> 3. Objets de Kubernetes
 
@@ -243,7 +278,7 @@ sequenceDiagram
 <!-- _header: Séance 4 - Kubernetes -->
 <!-- _paginate: false -->
 
-### Objets de Kubernetes
+### Les objets de Kubernetes
 
 <!-- _class: enum -->
 
@@ -261,175 +296,329 @@ sequenceDiagram
 
 L'architecture découplée des services Kubernetes : https://supports.uptime-formation.fr/05-kubernetes/04_cours_k8s_objects_1
 
-### Objets de base (1/8)
+### Namespace (1/2)
 
 <!-- _class: enum -->
-
-#### Namespace
 
 * Un namespace est un **espace de travail isolé regroupant des objets Kubernetes**
 * Des **limitations de ressources** (CPU, ...) peuvent être configurées par namespace
 * Des **rôles et permissions** peuvent être définies par namespace
-* Le namespace `default` est utilisé pour les objets créés sans préciser le namespace
 
-### Objets de base (2/8)
+![bg right 80%](./images/04-kubernetes/k8s_namespace.png)
 
-<!-- _class: enum -->
-
-#### Pod (1/3)
-
-* **Unité la plus petite de Kubernetes hébergeant les conteneurs d'une application**
-* Les conteneurs sur un Pod partagent la même stack réseau (même IP et nom de domaine) et le même stockage
-* Augmenter le nombre de Pods (replicas) permet la mise à l'échelle d'une application
-* Utilise la sonde _liveness_ pour confirmer qu'un conteneur est en cours d'exécution
-* Utilise la sonde _readiness_ pour confirmer qu'un conteneur a bien démarré
-
-### Objets de base (3/8)
+### Namespace (2/2)
 
 <!-- _class: enum -->
 
-#### Pod (2/3)
+* [Lister les namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#viewing-namespaces) : `kubectl get namespace`
+* Le namespace `default` est utilisé pour les objets créés sans préciser `--namespace`
+* Kubernetes inclut [4 namespaces initiaux](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#initial-namespaces) :
 
-Kubernetes fournit des commandes pour interragir avec les conteneurs d'un Pod.
+| Nom | Description |
+|-|-|
+| `default` | Namespace par défaut. |
+| `kube-node-lease` | Namespace des objets [Lease](https://kubernetes.io/docs/concepts/architecture/leases/) associés à chaque node. |
+| `kube-public` | Namespace réservé à l'usage du cluster (accès public). |
+| `kube-system` | Namespace pour les objets créés par le système Kubernetes. |
 
-`kubectl logs <pod-name> -c <conteneur_name>`
-
-`kubectl exec -it <pod-name> -c <conteneur_name> -- bash`
-
-`kubectl attach -it <pod-name>`
-
-`kubectl port-forward <pod-name> <port_interne>:<port_externe>`
-
-### Objets de base (4/8)
+### Pod (1/3)
 
 <!-- _class: enum -->
 
-#### Pod (3/3)
+* **Unité la plus petite hébergeant les conteneurs d'une application**
+* Les conteneurs d'un Pod partagent la même IP, nom de domaine et stockage
+* Augmenter le nombre de Pods (replicas) permet la mise à l'échelle
+* La sonde [_liveness_](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-a-liveness-command) confirme qu'un conteneur est en cours d'exécution
+* La sonde [_readiness_](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-readiness-probes) confirme qu'un conteneur a bien démarré
+
+![bg right 70%](./images/04-kubernetes/k8s_pod.png)
+
+### Pod (2/3)
+
+```shell
+kubectl apply --filename=docs/k8s/hello-pod.yaml
+```
 
 ```yaml
 apiVersion: v1
 kind: Pod
 metadata:
-  name: rancher-demo-pod
+  name: hello-pod
+  labels:
+    app.kubernetes.io/name: hello
 spec:
   containers:
-    - image: monachus/rancher-demo:latest
-      name: rancher-demo-container
-      ports:
-        - containerPort: 8080
-          name: http
-          protocol: TCP
-    - image: redis
-      name: redis-container
-      ports:
-        - containerPort: 6379
-          name: http
-          protocol: TCP
+    - name: hello
+      image: hashicorp/http-echo
+      args:
+        - "-text=hello"
 ```
 
-### Objets de base (5/8)
+### Pod (3/3)
 
 <!-- _class: enum -->
 
-#### Service
+Kubernetes fournit des commandes pour interragir avec les conteneurs d'un Pod.
+
+`kubectl.exe get pods`
+
+`kubectl get pods <pod-name> --output="jsonpath={.spec.containers[*].name}"`
+
+`kubectl logs <pod-name> [--container=<container-name>]`
+
+`kubectl exec --stdin --tty <pod-name> [--container=<container-name>] -- bash`
+
+`kubectl attach --stdin --tty <pod-name> [--container=<container-name>]`
+
+`kubectl port-forward <pod-name> [<local_port>:]<remote_port>`
+
+`kubectl delete pod <pod-name> [--force] [--now]`
+
+### Service (1/2)
+
+<!-- _class: enum -->
 
 * Désigne un **ensemble logique de Pods** (grâce à des tags) **exposés en tant que service réseau** (niveau d'abstraction au-dessus du Pod)
-* Fournit un endpoint réseau pour les requêtes à destination des Pods (_chaque Pod possède sa propre IP mais celle-ci est volatile donc non-utilisable de façon pérenne_)
-* Configure une politique permettant d'accéder aux Pods depuis l'intérieur ou l'extérieur du cluster
-* L'ensemble des Pods ciblés par un service est déterminé par un `selector`
+* Fournit un endpoint réseau pour les requêtes à destination des Pods (_chaque Pod possède sa propre IP volatile donc non pérenne_)
+* Définit politique d'accès aux Pods de l'intérieur ou l'extérieur du cluster
+* Les Pods ciblés par un service est déterminé par un `selector`
 
-### Objets de base (6/8)
+![bg right 90%](./images/04-kubernetes/k8s_service.png)
+
+### Service (2/2)
+
+```shell
+kubectl apply --filename=docs/k8s/hello-service.yaml
+```
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service
+spec:
+  selector:
+    app.kubernetes.io/name: hello
+  ports:
+    - name: hello-port
+      protocol: TCP
+      port: 5678 # Default port for image hashicorp/http-echo
+```
+
+![bg right 95%](./images/04-kubernetes/dashboard-nginx-service.png)
+
+### Ingress (1/3)
 
 <!-- _class: enum -->
 
-#### Ingress (1/2)
-
-* Objet qui gère l'accès externe à un service dans un cluster
+* **Objet qui gère l'accès externe à un service du cluster**
 * Peut fournir un équilibrage de charge, une terminaison TLS et un hébergement virtuel basé sur un nom
-* Un Ingress n'expose pas de ports ni de protocoles arbitraire
+* Un Ingress n'expose pas de ports/protocoles arbitraires
+* [Installer l'Ingress-NGINX Controller pour Kubernetes](https://github.com/kubernetes/ingress-nginx/blob/controller-v1.7.0/docs/deploy/index.md#quick-start) :
+  ```shell
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.6.4/deploy/static/provider/cloud/deploy.yaml
+  ```
 
-### Objets de base (7/8)
+![bg right 90%](./images/04-kubernetes/k8s_ingress.svg)
 
-<!-- _class: enum -->
+### Ingress (2/3)
 
-#### Ingress (2/2)
+```shell
+kubectl apply --filename=docs/k8s/hello-ingress.yaml
+```
 
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: test-ingress
+  name: hello-ingress
   annotations:
+    kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
-      paths:
-      - path: /testpath
-        pathType: Prefix
-        backend:
-          service:
-            name: test
-            port:
-              number: 80
+    - http:
+        paths:
+          - path: /hello
+            pathType: Prefix
+            backend:
+              service:
+                name: hello-service
+                port:
+                  name: hello-port
 ```
 
-### Objets de base (8/8)
+### Ingress (3/3)
 
 <!-- _class: enum -->
 
-#### ConfigMap
+Des annotations permettent de personnaliser le comportement d'un Ingress.
 
-* Permet d’injecter dans les pods des clés/valeur de configuration non-confidentielles
+|Nom|Description|Type|
+| --- | --- | --- |
+| [`nginx.ingress.kubernetes.io/rewrite-target`](https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md#rewrite) | Target URI where the traffic must be redirected | _string_ |
+| [`nginx.ingress.kubernetes.io/app-root`](https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md#rewrite) | Defines the Application Root that the Controller must redirect if it's in `/` context | _string_ |
+| [`...`](https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md) | [Voir la liste des annotations](https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md) | [_..._](https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md) |
+
+### ConfigMap
+
+<!-- _class: enum -->
+
+* **Permet d’injecter dans les pods des clés/valeur de configuration non-confidentielles**
 * Une ConfigMaps peut être utilisée en variable d'environnement, en arguments de la ligne de commande ou en fichiers de configuration dans un volume
 * Les Pods ne sont pas avertis des changements sur un ConfigMap
 
-#### Secret
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: game-demo
+data:
+  # property-like keys; each key maps to a simple value
+  player_initial_lives: "3"
+  # file-like keys
+  game.properties: |
+    player.maximum-lives=5    
+  user-interface.properties: |
+    color.lives=pink
+```
 
-* Permet d'éviter d'inclure des données confidentielles dans le code applicatif
-* Similaire à la ConfigMap mais pour les données confidentielles
-* Stockés sur tmpfs (RAM) et non sur le disque des nœuds
-
-### Contrôleurs (1/2)
+### Secret
 
 <!-- _class: enum -->
 
-#### Deployment
+* **Similaire à la ConfigMap mais pour les données confidentielles**
+* Permet d'éviter d'inclure des données confidentielles dans le code applicatif
+* Stockés sur tmpfs (RAM) et non sur le disque des nœuds
+* [Voir documentation des secrets](https://kubernetes.io/docs/concepts/configuration/secret)
 
-* Décrit le cycle de vie d'une application (images à utiliser, le nombre de pods à exécuter, etc) et la façon de la mettre à jour
-* Moyen déclaratif de mettre à jour une application
-* Permet d'automatiser le processus de déploiement de nouveaux Pods
+### ReplicaSet (1/2)
 
-#### ReplicaSet
+<!-- _class: enum -->
 
-* Un Pod est un élément unitaire non scalable et donc non-tolérent aux pannes
 * **Un ReplicaSet permet d'assurer que les réplicas spécifiés sont actifs**
+* Un Pod est un élément unitaire non scalable et donc non-tolérent aux pannes
 * Le lien entre un Pod et un ReplicaSet s’effectue via des Labels
 * Observe et réagit aux changements de la définition des Pods
 
-### Contrôleurs (2/2)
+![bg right 90%](./images/04-kubernetes/k8s_replicaset.png)
+
+### ReplicaSet (2/2)
+
+```shell
+kubectl apply --filename=docs/k8s/hello-replicaset.yaml
+```
+
+```yaml
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: hello-replicaset
+  labels:
+    app.kubernetes.io/name: hello
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hello
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hello
+    spec:
+      containers:
+        - name: hello
+          image: hashicorp/http-echo
+          args:
+            - "-text=hello"
+```
+
+### Deployment (1/2)
 
 <!-- _class: enum -->
 
-#### StatefulSet
+* **Décrit le cycle de vie d'une application** (images à utiliser, le nombre de pods à exécuter, etc) **et la façon de la mettre à jour**
+* Moyen déclaratif de mettre à jour une application
+* Permet d'automatiser le processus de déploiement de nouveaux Pods
 
-* Adapté pour déployer des applications avec état et des applications qui enregistrent des données sur un espace de stockage persistant
+![bg right 90%](./images/04-kubernetes/k8s_deployment_replicaset.png)
+
+### Deployment (2/2)
+
+```shell
+kubectl apply --filename=docs/k8s/hello-deployment.yaml
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-deployment
+  labels:
+    app.kubernetes.io/name: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hello
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hello
+    spec:
+      containers:
+        - name: hello
+          image: hashicorp/http-echo
+          args:
+            - "-text=hello"
+```
+
+### StatefulSet
+
+<!-- _class: enum -->
+
+* **Adapté pour déployer des applications avec état** et des applications qui enregistrent des données sur un stockage persistant
 * Représente un ensemble de Pods dotés d'identités uniques et persistantes et de noms d'hôtes stables
+* Similaire au ReplicaSet mais peut utiliser un _storage_ persistant (permet de stocker des données sans les perdre à la destruction d'un Pod)
 
-#### DaemonSet
+![bg right 80%](./images/04-kubernetes/k8s_statefulset.png)
 
-* Introduit une adhérence entre Pods et topologie du cluster
-* Exemple d’un agent [Fluentd](https://www.fluentd.org/) pour shipper les logs depuis chaque nœud
+### DaemonSet
 
-#### Job
+<!-- _class: enum -->
 
-* Relance des Pods jusqu'à obtenir un certain nombre d'exécution avec succès
+* **Introduit une adhérence entre Pods et topologie du cluster**
+* Exemple de création d'un Pod uniquement sur les nodes ayant l'étiquette de sélection `daemon=need`
 
-<!-- * ReplicaSet : assure que les réplicas d'un déploiement sont actifs
-* Deployment :
-* StatefulSet :
-* DaemonSet :
-* Job : -->
+![bg right 90%](./images/04-kubernetes/k8s_daemonset.png)
+
+### Job
+
+<!-- _class: enum -->
+
+* **Relance des Pods jusqu'à obtenir un certain nombre d'exécution avec succès**
+* Une [multitude d'usages des jobs sont possibles](https://kubernetes.io/docs/concepts/workloads/controllers/job/#job-patterns)
+
+```shell
+kubectl apply -f https://kubernetes.io/examples/controllers/job.yaml
+```
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  template:
+    spec:
+      containers:
+      - name: pi
+        image: perl:5.34.0
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never
+  backoffLimit: 4
+  completions: 1
+```
 
 ### Kubernetes Resources Map
 
@@ -446,5 +635,8 @@ Kubernetes Resources : https://jayendrapatil.com/kubernetes-components/
 <!-- _paginate: false -->
 
 * Documentation de Kubernetes<br>https://kubernetes.io/fr/docs/home/
-* Kubernetes :: Formations Uptime<br>https://supports.uptime-formation.fr/05-kubernetes/
-* RedHat - Comprendre les conteneurs<br>https://www.redhat.com/fr/topics/containers
+* Kubernetes Documentation / Deploy and Access the Kubernetes Dashboard<br>https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
+* Kubernetes Glossary<br>https://kubernetes.io/docs/reference/glossary/
+* Kubernetes Reference / Command line tool (kubectl)<br>https://kubernetes.io/docs/reference/kubectl/
+* Kubernetes Reference / Kubernetes API<br>https://kubernetes.io/docs/reference/kubernetes-api/
+* Kubernetes Tutorials / Hello Minikube<br>https://kubernetes.io/docs/tutorials/hello-minikube/
