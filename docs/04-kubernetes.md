@@ -109,14 +109,22 @@ style: |
 * **Orchestre les ressources machines (_computing_), la mise en réseau et l'infrastructure de stockage sur les workloads des utilisateurs**
 * Se rapproche de la simplicité des _Platform as a Service_ (PaaS) avec la flexibilité des solutions d'_Infrastructure as a Service_ (IaaS), tout en gardant de la portabilité entre les différents fournisseurs d'infrastructures (_providers_)
 
-### Pourquoi les conteneurs (1/3) ?
+### Déploiements classiques VS conteneurs
 
 <!-- _class: figure -->
 
 ![w:48em](./images/04-kubernetes/why_containers.svg)
 Kubernetes Documentation / Concepts / Vue d'ensemble / Qu'est-ce-que Kubernetes ? : https://kubernetes.io/fr/docs/concepts/overview/what-is-kubernetes/
 
-### Pourquoi les conteneurs ? (2/3)
+### Kubernetes dans l'ère des conteneurs
+
+<!-- _class: figure -->
+
+![](./images/04-kubernetes/container_evolution.svg)
+
+Going back in time : https://kubernetes.io/docs/concepts/overview/#going-back-in-time
+
+### Pourquoi les conteneurs ? (1/2)
 
 <!-- _class: enum -->
 
@@ -126,7 +134,7 @@ Kubernetes Documentation / Concepts / Vue d'ensemble / Qu'est-ce-que Kubernetes 
 * **Observabilité** : Informations venant non seulement du système d'exploitation sous-jacent mais aussi des signaux propres de l'application.
 * **Consistance entre les environnements de développement, tests et production** : Fonctionne de la même manière que ce soit sur un poste local que chez un fournisseur.
 
-### Pourquoi les conteneurs ? (3/3)
+### Pourquoi les conteneurs ? (2/2)
 
 <!-- _class: enum -->
 
@@ -140,7 +148,7 @@ Kubernetes Documentation / Concepts / Vue d'ensemble / Qu'est-ce-que Kubernetes 
 
 <!-- _class: enum -->
 
-* Kubernetes v1.26 supporte des clusters jusqu'à 5000 nodes
+* **Kubernetes v1.26 supporte des clusters jusqu'à 5000 nodes**
 * Pas plus de 110 Pods par node
 * Pas plus de 150 000 Pods au total
 * Pas plus de 300 000 conteneurs au total
@@ -194,7 +202,7 @@ Diagramme d'architecture de Kubernetes : https://fr.wikipedia.org/wiki/Kubernete
 * [`kubelet`](https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/) : Agent qui s'exécute sur chaque nœud pour s'assurer que les conteneurs fonctionnent dans un Pod
 * `cAdvisor` : Agent intégré à `kubelet` surveillant la consommation des ressources et les performances des conteneurs (collecte statistiques CPU, mémoire, disque et réseau)
 * [`kube-proxy`](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-proxy/) : Proxy réseau qui s'exécute sur chaque nœud pour réaliser le routage du trafic vers le conteneur approprié
-* [Container Runtime](https://kubernetes.io/docs/concepts/overview/components/#container-runtime) : Logiciel responsable de l'exécution de conteneurs (implémentant [Kubernetes Container Runtime Interface](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md))
+* [Container Runtime](https://kubernetes.io/docs/concepts/overview/components/#container-runtime) : Logiciel responsable de l'exécution de conteneurs (implémentant Kubernetes [**C**ontainer **R**untime **I**nterface](https://github.com/kubernetes/community/blob/master/contributors/devel/sig-node/container-runtime-interface.md))
 
 ### Les composants complémentaires (addons)
 
@@ -208,10 +216,17 @@ Les addons utilisent les ressources Kubernetes (DaemonSet, Déploiement, etc) po
 * [Infrastructure](https://kubernetes.io/docs/concepts/cluster-administration/addons/#infrastructure)
 * [Legacy Add-ons](https://kubernetes.io/docs/concepts/cluster-administration/addons/#legacy-add-ons)
 
-### Séquence de planification d'un Pod
+### Flux de planification d'un Pod
 
 <!-- _class: figure -->
 
+![w:56em](./images/04-kubernetes/kube-scheduler.svg)
+
+<!-- Source : https://kubernetes.io/blog/2023/01/12/protect-mission-critical-pods-priorityclass/#resource-management-in-kubernetes -->
+
+### Séquence de planification d'un Pod
+
+<!-- _class: figure -->
 
 ![w:58em](./images/04-kubernetes/sequence_de_planification_dun_pod.svg)
 
@@ -349,9 +364,7 @@ metadata:
 spec:
   containers:
     - name: hello
-      image: hashicorp/http-echo
-      args:
-        - "-text=hello"
+      image: kennship/http-echo # Source: https://github.com/kennship/http-echo
 ```
 
 ### Pod (3/3)
@@ -360,7 +373,7 @@ spec:
 
 Kubernetes fournit des commandes pour interragir avec les conteneurs d'un Pod.
 
-`kubectl.exe get pods`
+`kubectl get pods`
 
 `kubectl get pods <pod-name> --output="jsonpath={.spec.containers[*].name}"`
 
@@ -374,6 +387,8 @@ Kubernetes fournit des commandes pour interragir avec les conteneurs d'un Pod.
 
 `kubectl delete pod <pod-name> [--force] [--now]`
 
+`...` voir [`kubectl` Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
+
 ### Service (1/2)
 
 <!-- _class: enum -->
@@ -381,7 +396,7 @@ Kubernetes fournit des commandes pour interragir avec les conteneurs d'un Pod.
 * Désigne un **ensemble logique de Pods** (grâce à des tags) **exposés en tant que service réseau** (niveau d'abstraction au-dessus du Pod)
 * Fournit un endpoint réseau pour les requêtes à destination des Pods (_chaque Pod possède sa propre IP volatile donc non pérenne_)
 * Définit politique d'accès aux Pods de l'intérieur ou l'extérieur du cluster
-* Les Pods ciblés par un service est déterminé par un `selector`
+* **Les Pods ciblés par un service est déterminé par un `selector`**
 
 ![bg right 90%](./images/04-kubernetes/k8s_service.png)
 
@@ -402,7 +417,7 @@ spec:
   ports:
     - name: hello-port
       protocol: TCP
-      port: 5678 # Default port for image hashicorp/http-echo
+      port: 3000 # Default port for image: kennship/http-echo
 ```
 
 ![bg right 95%](./images/04-kubernetes/dashboard-nginx-service.png)
@@ -464,8 +479,8 @@ Des annotations permettent de personnaliser le comportement d'un Ingress.
 
 <!-- _class: enum -->
 
-* **Permet d’injecter dans les pods des clés/valeur de configuration non-confidentielles**
-* Une ConfigMaps peut être utilisée en variable d'environnement, en arguments de la ligne de commande ou en fichiers de configuration dans un volume
+* **Permet d’injecter dans les pods des clés/valeur de config non-confidentielles**
+* [Une ConfigMap peut être utilisée](https://kubernetes.io/docs/concepts/configuration/configmap/#configmap-configure-pod-yaml) en variable d'environnement, en arguments de la ligne de commande ou en fichiers de configuration dans un volume
 * Les Pods ne sont pas avertis des changements sur un ConfigMap
 
 ```yaml
@@ -517,7 +532,7 @@ metadata:
   labels:
     app.kubernetes.io/name: hello
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: hello
@@ -528,9 +543,7 @@ spec:
     spec:
       containers:
         - name: hello
-          image: hashicorp/http-echo
-          args:
-            - "-text=hello"
+          image: kennship/http-echo # Source: https://github.com/kennship/http-echo
 ```
 
 ### Deployment (1/2)
@@ -568,9 +581,7 @@ spec:
     spec:
       containers:
         - name: hello
-          image: hashicorp/http-echo
-          args:
-            - "-text=hello"
+          image: kennship/http-echo # Source: https://github.com/kennship/http-echo
 ```
 
 ### StatefulSet
@@ -624,7 +635,7 @@ spec:
 
 <!-- _class: figure -->
 
-![](./images/04-kubernetes/Kubernetes_Resources-2048x1262.png)
+![Kubernetes Resources Map](./images/04-kubernetes/Kubernetes_Resources-2048x1262.png)
 
 Kubernetes Resources : https://jayendrapatil.com/kubernetes-components/
 
@@ -637,6 +648,6 @@ Kubernetes Resources : https://jayendrapatil.com/kubernetes-components/
 * Documentation de Kubernetes<br>https://kubernetes.io/fr/docs/home/
 * Kubernetes Documentation / Deploy and Access the Kubernetes Dashboard<br>https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 * Kubernetes Glossary<br>https://kubernetes.io/docs/reference/glossary/
-* Kubernetes Reference / Command line tool (kubectl)<br>https://kubernetes.io/docs/reference/kubectl/
+* Kubernetes Reference / `kubectl` Cheat Sheet<br>https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 * Kubernetes Reference / Kubernetes API<br>https://kubernetes.io/docs/reference/kubernetes-api/
 * Kubernetes Tutorials / Hello Minikube<br>https://kubernetes.io/docs/tutorials/hello-minikube/

@@ -16,6 +16,4 @@ spec:
     spec:
       containers:
         - name: hello
-          image: hashicorp/http-echo
-          args:
-            - "-text=hello"
+          image: kennship/http-echo # Source: https://github.com/kennship/http-echo

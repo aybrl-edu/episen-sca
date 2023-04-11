@@ -8,4 +8,4 @@ spec:
   ports:
     - name: hello-port
       protocol: TCP
-      port: 5678 # Default port for image hashicorp/http-echo
+      port: 3000 # Default port for image: kennship/http-echo
