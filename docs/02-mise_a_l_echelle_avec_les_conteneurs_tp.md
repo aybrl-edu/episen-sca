@@ -65,7 +65,7 @@ style: |
   }
 ---
 
-# TP 2 - Mise à l'échelle avec les conteneurs
+# TP - Mise à l'échelle avec les conteneurs
 
 <!-- header: Scalabilité, Virtualisation et Conteneurisation -->
 <!-- _class: dark -->
@@ -73,7 +73,7 @@ style: |
 
 ## Mise à l’échelle avec les conteneurs et Docker Compose
 
-<!-- header: TP 2 - Mise à l'échelle avec les conteneurs -->
+<!-- header: TP - Mise à l'échelle avec les conteneurs -->
 <!-- _class: enum -->
 
 * Concevoir le [Docker Compose](https://docs.docker.com/compose/compose-file/) adapté à votre API et Redis

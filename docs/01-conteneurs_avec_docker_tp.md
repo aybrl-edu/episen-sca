@@ -65,7 +65,7 @@ style: |
   }
 ---
 
-# TP 1 - Conteneurs avec Docker
+# TP - Conteneurs avec Docker
 
 <!-- header: Scalabilité, Virtualisation et Conteneurisation -->
 <!-- _class: dark -->
@@ -73,7 +73,7 @@ style: |
 
 ## Partie 1
 
-<!-- header: TP 1 - Conteneurs avec Docker -->
+<!-- header: TP - Conteneurs avec Docker -->
 <!-- _class: enum -->
 
 ### Développement
