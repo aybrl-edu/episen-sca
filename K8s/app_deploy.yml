@@ -1,0 +1,20 @@
+# sca-tp-deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sca-tp
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: sca-tp
+  template:
+    metadata:
+      labels:
+        app: sca-tp
+    spec:
+      containers:
+      - name: prod
+        image: mabepisen/prod:v1
+        ports:
+        - containerPort: 1337

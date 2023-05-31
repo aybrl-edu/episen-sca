@@ -1,0 +1,12 @@
+# Service Pour App
+apiVersion: v1
+kind: Service
+metadata:
+  name: sca-tp-service
+spec:
+  selector:
+    app: sca-tp
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 1337
