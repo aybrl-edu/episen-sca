@@ -88,7 +88,7 @@ Check the cluster nodes created on Docker (K3d creates nodes as docker container
 
 
 ### Declarative Approach
-To create a dynamic Pod (as opposed to [static Pods](https://k3d.io/v5.3.0/usage/commands/k3d_cluster_create/)) we define a YAML file to create a Deployment which is going to take care of create a Pod under a [ReplicaSet]( https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
+To create a dynamic Pod (as opposed to [static Pods](https://k3d.io/v5.3.0/usage/commands/k3d_cluster_create/)) we define a YAML file to create a Deployment which is going to take care of creating a Pod under a [ReplicaSet]( https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/)
 
 In the spec.template.spec.containers.image we give the image pushed earlier to our registry on DockerHub. By Default Kubernetes will look and pull the image from DockerHub if no prior url of a container registry was provided
 
