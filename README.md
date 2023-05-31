@@ -162,7 +162,7 @@ spec:
       targetPort: 6379
 
 ```
-I create a folder called K8s where all the object desired states were defined in a form of YAML files (the deployment and service objects for the app and redis), we then commit the YAML files to the API Server using kubectl, we watch the progress of the objects being create with --watch.
+I created a folder called [K8s](https://github.com/aybrl-edu/episen-sca/tree/main/K8s) where all the object desired states were defined in a form of YAML files (the deployment and service objects for the app and redis), we then commit the YAML files to the API Server using kubectl, we watch the progress of the objects being create with --watch.
 
 We will create 5 Pods replicas of our app and one of redis 
 
